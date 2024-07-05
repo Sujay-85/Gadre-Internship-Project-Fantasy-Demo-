@@ -1,0 +1,258 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Site - Contest List</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            background-image: url("Loginbg.png");
+            background-size: cover;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            color: white;
+        }
+        th {
+            background-color: #00e2cb;
+            color: white;
+        }
+        button {
+            background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 6px );
+-webkit-backdrop-filter: blur( 6px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00e2cb;
+        }
+        .add-contest-button {
+            display: block;
+            margin: 20px 0;
+        }
+
+        h2{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Join Contest </h2>
+    <table id="data-table1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Contest Date</th>
+            <th>Start Time</th>
+            <th>Name</th>
+            <th>Contest Fees</th>
+            <th>Price</th>
+            <th>Join</th>
+        </tr>
+        </thead>    
+        <tbody>
+            <script>
+                async function loadConstrainedData() {
+                  const column = 'status'; // example constraint
+                  const value = 'free'; // example value
+                  const currentDate = new Date();
+                  try {
+                    const response = await fetch(`http://localhost:3000/data1`);
+                    const data = await response.json();
+                    const tableBody = document.getElementById('data-table1').querySelector('tbody');
+                    tableBody.innerHTML = '';
+                    data.forEach(row => {
+                      const tr = document.createElement('tr');
+                      const joinDate = new Date(row.start_time);
+                      tr.innerHTML = `
+                        <td>${row.id}</td>
+                        <td>${row.contest_date}</td>
+                        <td>${row.start_time}</td>
+                        <td>${row.name}</td>
+                        <td>${row.fees}</td>
+                        <td>${row.price}</td>
+                        <td>
+                        if (joinDate > currentDate) {
+                            <td><button onclick="join(${row.id})">Join</button></td>
+                          
+                        } else {
+                            <td>Joined!</td>
+                        }
+                        </td>                        
+                    `;
+                      tableBody.appendChild(tr);
+                    });
+                  } catch (error) {
+                    console.error('Error loading data:', error);
+                  }
+                }
+                window.onload = loadConstrainedData;
+            
+                // async function join(id) {
+                //   try {
+                //     const response = await fetch('http://localhost:3000/join', {
+                //       method: 'POST',
+                //       headers: {
+                //         'Content-Type': 'application/json'
+                //       },
+                //       body: JSON.stringify({ id })
+                //     });
+                //     const result = await response.json();
+                //     console.log(result.message);
+                //     loadConstrainedData(); // Reload the data to reflect changes
+                //   } catch (error) {
+                //     console.error('Error joining:', error);
+                //   }
+                // }
+            
+               
+              </script>
+        </tbody>
+    </table>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contest Table</title>
+  <style>
+    body{
+        padding: 0;
+        margin: 0;
+        /* background-image: url("Loginbg.png"); */
+        background-size: cover;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(#5621a7, #230352);
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+        color: white;
+    }
+    th {
+        background-color: #00e2cb;
+        color: white;
+    }
+    button {
+        background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 6px );
+-webkit-backdrop-filter: blur( 6px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #00e2cb;
+    }
+    .add-contest-button {
+        display: block;
+        margin: 20px 0;
+    }
+
+    h2{
+        color: white;
+    }
+</style>
+</head>
+<body>
+  <h2>Join Contest </h2>
+  <table id="data-table1">
+      <thead>
+      <tr>
+          <th>ID</th>
+          <th>Contest Date</th>
+          <th>Start Time</th>
+          <th>Name</th>
+          <th>Contest Fees</th>
+          <th>Price</th>
+          <th>Join</th>
+          <!-- <th>Activity</th> -->
+      </tr>
+      </thead>    
+      <tbody>
+
+  <script>
+    async function loadConstrainedData() {
+      const currentDate = new Date();
+      try {
+        const response = await fetch(`http://localhost:3000/data1`);
+        const data = await response.json();
+        const tableBody = document.getElementById('data-table1').querySelector('tbody');
+        tableBody.innerHTML = '';
+        data.forEach(row => {
+          const tr = document.createElement('tr');
+          const joinDate = new Date(row.contest_date);
+
+          // Conditionally create the action cell content
+          let actionCellContent;
+          let joiningContent;
+          if (joinDate > currentDate) {
+            // joiningContent = 'Not Join';
+            actionCellContent = `<button onclick="join(${row.id})">Join</button>`;
+           
+          } else {
+            // joiningContent = 'Join';
+            actionCellContent = 'Joined!';
+          }
+            
+          tr.innerHTML = `
+            <td>${row.id}</td>
+            <td>${row.contest_date}</td>
+            <td>${row.start_time}</td>
+            <td>${row.name}</td>
+            <td>${row.fees}</td>
+            <td>${row.price}</td>
+            <td>${actionCellContent}</td>
+            
+          `;
+          tableBody.appendChild(tr);
+        });
+      } catch (error) {
+        console.error('Error loading data:', error);
+      }
+    }
+
+    window.onload = loadConstrainedData;
+
+    function join(contestId,) {
+      // Implement your join contest logic here
+      alert('Joined contest with ID: ' + contestId);
+    
+          const button = event.target;
+            // Change the button text to "Joined!" and disable it
+            const cell = button.parentNode;
+            cell.innerHTML = 'Joined!';
+    }
+  </script>
+  </tbody>
+  </table>
+</body>
+</html>

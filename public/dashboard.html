@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Site - Contest List</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            /* background-image: url("Loginbg.png"); */
+            background-size: cover;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(#5621a7, #230352);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            color: white;
+        }
+        th {
+            background-color: #00e2cb;
+            color: white;
+        }
+        button {
+            background: rgba( 255, 255, 255, 0.25 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 6px );
+-webkit-backdrop-filter: blur( 6px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #00e2cb;
+        }
+        .add-contest-button {
+            display: block;
+            margin: 10px -10px;
+            margin-right: 25px;
+        }
+
+        h2{
+            color: white;
+            width: 300px;
+        }
+        .label{
+            display: flex;
+            height: 80px;
+            width:100%;
+        }
+        .btn{
+            margin-left: 700px;
+        }
+        .btn2{
+            margin-left: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="label">
+        <h2 align="center">Contest List</h2>
+        <a href="Addcontest.html" class="add-contest-button"><button class="btn">Add New Contest</button></a>
+        <a href="join_contest.html" class="add-contest-button"><button class="btn2">Join a Contest</button></a>
+    </div>
+    
+    <table id="data-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Contest Date</th>
+            <th>Start Time</th>
+            <th>Name</th>
+            <th>Contest Fees</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>  
+    </table>
+
+    
+
+    <script>
+        async function loadData() {
+          try {
+            const response = await fetch('http://localhost:3000/data');
+            const data = await response.json();
+            const tableBody = document.getElementById('data-table').querySelector('tbody');
+            data.forEach(row => {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>${row.id}</td>
+                <td>${row.contest_date}</td>
+                <td>${row.start_time}</td>
+                <td>${row.name}</td>
+                <td>${row.fees}</td>
+                <td>${row.price}</td>
+              `;
+              tableBody.appendChild(tr);
+            });
+          } catch (error) {
+            console.error('Error loading data:', error);
+          }
+        }
+    
+        window.onload = loadData;
+      </script>
+</body>
+</html>
